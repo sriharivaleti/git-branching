@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>COMD3663 Dynamic Web 1: Git Branching</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section class="section">
+                <h1 class="capitalize">COMD3663 Dynamic Web 1</h1>
+                <h2 class="capitalize center">Git Branching</h2>
+            </section>
+            <section class="section">
+                <h2 class="capitalize">Beyond <code>git push origin master</code></h2>
+                <p>So you have <em><strong>created</strong></em> your <code>local repository</code>. You have even git
+                    <code>push -u origin
+                        master</code>. But now you want
+                    to <code>branch
+                        out</code>! Perhaps you want to <em><strong>host</strong></em> <em>many</em> <code>different
+                        branches</code> in your
+                    <code>repository</code>, and you want
+                    <em><strong>others</strong></em> to be able to <strong>download</strong> <code>single
+                        branches</code> <em>instead of</em>
+                    the <code>whole
+                        repository</code>. This is what this
+                    <strong>slide deck</strong> is all about. Getting you <em><strong>more</strong></em>
+                    <code>branches</code> in both
+                    your <code>local</code> and
+                    <code>remote</code> repository.</p>
+            </section>
+            <section class="section">
+                <h2 class="lowercase center"><code>git branching</code>: the <code>.mov</code></h2>
+                <div class="center">
+                    <video src="assets/mov/git-branching-480.mov" controls="controls"
+                        alt="git branching the movie"></video>
+                </div>
+            </section>
+            <section class="section">
+                <h2 class="lowercase"><code>git checkout -b</code></h2>
+                In order to <code>checkout</code> of your <code>current branch</code> (which is probably your
+                <code>default
+                    master
+                    branch</code>) AND <strong><em>create</em></strong> a <strong>new branch</strong> at the
+                <em><strong>same time</strong></em>,
+                you
+                would <strong>type</strong> the following <code>command</code> in <strong>Terminal</strong> followed by
+                hitting the
+                <code>enter/return</code> key:
+                <pre data-shell noescape><code>
+git checkout -b nameofnewbranch
+                </code></pre>
+                <p>HOWEVER, make sure that you have <strong><em>committed</em></strong> ALL <strong>changes</strong> to
+                    your <code>master
+                        branch</code> <strong>locally</strong> before <code>checking out</code> of
+                    it. Otherwise, those <strong>un-commited</strong> <em><strong>changes</strong></em> will follow you
+                    into the new branch, and
+                    perhaps you DON'T
+                    WANT that.</p>
+            </section>
+            <section class="section">
+                <h2 class="lowercase"><code>git checkout -b</code>: breakdown</h2>
+                <ul>
+                    <li><code>git checkout</code> means that you are <strong>checking out</strong> of your
+                        <strong>current
+                            branch</strong>. It <em><strong>implies</strong></em>
+                        that you will be
+                        <strong>checking in</strong> to another one. In fact, if you weren't <em>creating</em> a
+                        <code>new
+                            branch</code> to
+                        <code>check</code> into, <code>git
+                            checkout</code> would simply be followed by the <strong>name</strong> of the
+                        <code>branch</code> you
+                        wanted to <code>check</code> into:
+                        <pre><code>
+git checkout nameofbranch
+                        </code></pre>
+                    </li>
+                    <li><code>-b</code> is a Git <code>option</code> which is a <code>convenience flag</code> that tells
+                        <code>Git</code> to run
+                        <code>git branch
+                            newbranch</code> before running <code>git checkout newbranch</code>.</li>
+                    <li>So <code>git checkout -b newbranch</code> is a <strong>shortcut</strong> for
+                        <em><strong>first</strong></em> <strong>implicitly creating</strong>
+                        a <code>new
+                            branch</code> with the <code>git branch newbranch</code> command and then
+                        <strong><em>checking out</em></strong> of the current branch into
+                        the <strong>newly created</strong> <code>branch</code>
+                        with <code>git
+                            checkout newbranch</code>.</li>
+                </ul>
+            </section>
+            <section class="section">
+                <h2 class="lowercase"><code>pushing</code> the new branch to <code>remote</code></h2>
+                <p>Once you have made the <strong>changes</strong> that you want to make in your <code>newbranch</code>,
+                    you have to
+                    <code>commit</code> them
+                    <code>locally</code> before <strong>either</strong> <code>checking out</code> of the
+                    <code>branch</code>, or
+                    before <code>pushing</code>
+                    the <code>newbranch</code> to
+                    <code>remote origin</code>, and
+                    then <code>checking out</code>
+                    of the <code>newbranch</code> <em><strong>back</strong></em> into <code>master</code>.</p>
+            </section>
+            <section class="section">
+                <h2 class="lowercase"><code>pushing</code> the new branch to <code>remote</code> (contd)</h2>
+                <ul>
+                    <li>First <code>commit</code> all your <code>local changes</code>:</li>
+                    <ul>
+                        <li>First <code>git add .</code> to <strong><em>add</em></strong> <strong>all files</strong> and
+                            <strong>folders</strong> to the
+                            <code>staging area</code>. Or <code>git add
+                                filename</code> or <code>git add
+                                folder/filename</code> (<code>Git</code> will alert you when you
+                            <em><strong>use</strong></em> the <code>git
+                                status</code> command as to whether something is a <code>file</code>
+                            or a
+                            <code>folder</code> with a <code>file</code>
+                            in it).</li>
+                        <li>Next <code>git commit</code>, which takes you into the <code>VIM </code>editor which is
+                            <em><strong>pre-installed</strong></em> with your <strong>Mac</strong>. I
+                            <em><strong>like</strong></em>
+                            <strong>committing</strong> this
+                            way because I don't have to <em>worry</em> about the <strong>potential errors</strong> that
+                            <strong><em>arise</em></strong> when using
+                            <code>git
+                                commit -m "Commit Message"</code>. People often <em><strong>forget</strong></em> to
+                            <strong>close</strong> the <strong><em>double quotes</em></strong>
+                            wrapping
+                            the
+                            <code>commit message</code>. This way, people tend to make the <strong>message</strong>
+                            <em><strong>very
+                                    short</strong></em>, <em>not</em>
+                            <strong>descriptive enough</strong>,
+                            so that others (including themselves) would not be able to tell what the
+                            <strong><em>changes</em></strong> were <strong>about</strong>.
+                        </li>
+                    </ul>
+                </ul>
+            </section>
+            <section class="section">
+                <h2 class="lowercase"><code>git push -u origin nameofnewbranch</code>: first scenario</h2>
+                <p>So you have <em><strong>committed</strong></em> all your <code>changes</code>
+                    <em><strong>locally</strong></em> in your <code>new
+                        branch</code>,
+                    and now you want to <code>push</code> your <code>new
+                        branch</code> to <code>origin</code>. You would type the following <code>command</code> in
+                    <strong>Terminal</strong> and then
+                    hit
+                    the
+                    <strong>enter/return</strong> key:</p>
+                <pre data-shell noescape><code>
+git push -u origin nameofnewbranch
+                </code></pre>
+                <p><em><strong>Not only</strong></em> do we want to <strong>link</strong> our <code>local master
+                        branch</code> with
+                    <code>remote master</code>, but
+                    we want to <em><strong>link</strong></em> any other
+                    <code>local branches</code>
+                    we <code>push</code> to <code>remote</code>, so we use the <code>-u</code> option. This <em>too</em>
+                    is a
+                    <strong>convenience
+                        flag</strong>, like <code>-b</code>.
+                    <code>git push -u</code> is
+                    <em><strong>short</strong></em> for <code>git
+                        push -set-upstream</code> (this was also mentioned in the <a
+                        href="https://interglobalmedia.github.io/basic-git-commands/#/18" target="_blank">Basic Git
+                        Commands</a>
+                    <strong>Slide Deck</strong>).
+                </p>
+                <p>After you have <em><strong>pushed</strong></em> your <code>new local branch</code> to
+                    <code>remote</code>
+                    (origin), <em><strong>check</strong></em> your
+                    <code>remote repository</code> on
+                    <strong>Github</strong> to make sure that it was <em><strong>pushed</strong></em> successfully.</p>
+            </section>
+            <section class="section">
+                <h2 class="lowercase"><code>git checkout master</code>: second scenario</h2>
+                <p><em><strong>After</strong></em> you have <strong>committed</strong> your <strong>changes</strong> as
+                    <em><strong>demonstrated</strong></em> in
+                    the <strong>first scenario</strong>
+                    (previous slide), <em>maybe</em>
+                    you <strong>don't want</strong> to <code>push</code> it just yet to <code>remote</code>.
+                    <em>Maybe</em> you
+                    just want to
+                    <strong>go back</strong> into
+                    your <code>master
+                        branch</code>. To do that, you will simply <strong>type</strong> the following
+                    <code>command</code> in
+                    <strong>Terminal</strong> followed by
+                    <em>hitting</em> the
+                    <code>enter/return</code> key:
+                    <pre><code data-shell noescape>
+git checkout master
+                    </code></pre>
+                    This <code>command</code> means that you are <code>checking out</code> of your
+                    <code>nameofnewbranch</code> and
+                    <em>into</em> your
+                    <code>master branch</code>.
+                </p>
+            </section>
+            <section class="section">
+                <h2 class="lowercase"><code>git merge nameofnewbranch</code>: scenario three</h2>
+                <p>Now that you have <em><strong>checked out</strong></em> of your <code>nameofnewbranch</code> and
+                    <em><strong>back</strong></em>
+                    into <code>master</code>,
+                    perhaps you want to <code>merge</code> the
+                    <strong>contents</strong> of your <code>new branch</code> into the <code>master branch</code>. This
+                    is <em>done</em> when
+                    a <code>new branch</code>
+                    is <em>created</em>
+                    <strong>focusing on</strong> a <strong>new feature</strong> of your <strong>application</strong>,
+                    and you want to
+                    <em><strong>first</strong></em> <strong>test out</strong> how
+                    it <strong>works</strong> in your
+                    <strong>application</strong> in a <em><strong>separate branch</strong></em> before
+                    <strong>including</strong> it in
+                    your (production) <code>master
+                        branch</code>. You would <strong>type</strong> the following <code>command</code> in
+                    <strong>Terminal</strong>
+                    followed by
+                    <em><strong>hitting</strong></em> the <code>enter/return</code> key:
+                    <pre data-shell noescape><code>
+git merge nameofnewbranch
+                    </code></pre>
+                </p>
+                <p>This <strong>command</strong> will take you into <code>VIM</code>.</p>
+                <p>In the next slide, I take you from <code>git init</code> a project called
+                    <strong>git-branching-testing</strong>,
+                    <em><strong>committing</strong></em> all
+                    files <strong>locally</strong> and then <strong>pushing</strong> them to the <code>remote
+                        repository</code> on
+                    <strong>Github</strong>, then
+                    <code>checking out</code> of <code>master</code>
+                    into a <code>new branch</code> which is <em>created</em> before <code>checking out</code> of
+                    <code>master</code>
+                    with <code>git
+                        checkout -b
+                        nameofnewbranch</code>, <em><strong>adding</strong></em> new <strong>content</strong> to the
+                    project in that
+                    branch, <em><strong>committing</strong></em> those
+                    <strong>changes</strong> <em><strong>locally</strong></em>,
+                    and then <code>git push -u origin nameofnewbranch</code>. After that, I <code>check out</code> of
+                    the <code>new branch</code>
+                    into <code>master</code>,
+                    <code>merge</code> the <strong>contents</strong> of <code>nameofnewbranch</code> into
+                    <code>master</code>, and
+                    then push
+                    <em><strong>everything</strong></em> to <code>remote
+                        master</code>.</p>
+            </section>
+            <section class="section">
+                <h2><code>git merge nameofnewbranch --no-ff</code></h2>
+                <p>I find <code>--no-ff</code> <em><strong>essential</strong></em> when <strong>merging</strong> one
+                    <code>branch</code> into <em><strong>another</strong></em>.
+                    Why? Because
+                    <code>--no-ff</code>
+                    <strong>prevents</strong> <code>git merge</code> from <em><strong>executing</strong></em> a "fast
+                    forward", thereby <em>only</em>
+                    <strong>displaying</strong> the
+                    <code>branch merge</code> instead
+                    of (potentially) <strong>multiple commits</strong> made before the <code>merge</code> itself. I like
+                    to see <em><strong>all</strong></em>
+                    the <code>commits</code> I have
+                    made, because then I know <em><strong>when</strong></em> I did <em><strong>what</strong> </em>.
+                    if you simply merge without <code>--no-ff</code>, you
+                    won't see the <code>commits breakdown</code> preceding the <code>merge</code>.</p>
+                <p>I technically didn't
+                    create a <em><strong>slew</strong></em> of <strong>commits</strong> before <code>checking out</code>
+                    of the <code>new
+                        branch</code> into the
+                    <code>master branch</code>, and I also
+                    <em><strong>pushed</strong></em> to <code>origin nameofnewbranch</code> before <em><strong>checking
+                            back</strong></em> into
+                    <code>master</code>, but you
+                    should <strong>test</strong> this out
+                    yourself, <em><strong>first</strong></em> doing a <code>git merge nameofbranch</code>, and then
+                    <code>git
+                        merge
+                        nameofbranch --no-ff</code>. Check out
+                    the <em><strong>difference</strong></em>. Make sure to make at <em><strong>least</strong></em>
+                    <strong>two
+                        commits</strong>, <e><strong>not</strong></e> pushing the
+                    branch to <code>remote origin</code>,
+                    checking back into <code>master</code>, and then <code>merging</code>. Do it on a
+                    <strong>dummy</strong> test branch
+                    first.</p>
+            </section>
+            <section class="section">
+                <h2 class="capitalize">Related Resources</h2>
+                <ul>
+                    <li><a href="https://www.atlassian.com/git/tutorials/using-branches/git-checkout">Git Checkout</a>:
+                        <strong>atlassian.com</strong>
+                    </li>
+                    <li><a
+                            href="https://stackoverflow.com/questions/9069061/what-is-the-difference-between-git-merge-and-git-merge-no-ff">What
+                            is the difference between `git merge` and `git merge --no-ff`?
+                        </a>: <strong>stackoverflow</strong></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            hash: true,
+            dependencies: [{
+                    src: 'plugin/markdown/marked.js'
+                },
+                {
+                    src: 'plugin/markdown/markdown.js'
+                },
+                {
+                    src: 'plugin/highlight/highlight.js'
+                },
+                {
+                    src: 'plugin/notes/notes.js',
+                    async: true
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>
